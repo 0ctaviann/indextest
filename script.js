@@ -1,4 +1,5 @@
 table = document.querySelector('table');
+const buttons = document.getElementById('grid-buttons');
 b2 = document.querySelector('#b2');
 b3 = document.querySelector('#b3');
 b4 = document.querySelector('#b4');
@@ -14,8 +15,14 @@ fetch('bofrost.json')
     .catch(error => console.error(error));
 
 b2.addEventListener('click', printFasciaB2);
-b3.addEventListener('click', printFasciaB3);
-b4.addEventListener('click', printFasciaB4);
+b3.addEventListener('click', printFasciaB2);
+b4.addEventListener('click', printFasciaB2);
+
+buttons.querySelectorAll("button").forEach(button => {
+    button.addEventListener("click", () => {
+      button.classList.toggle("active");
+    });
+  });  
 
 function printAllData(data) {
     table.innerHTML = `
