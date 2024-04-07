@@ -6,6 +6,17 @@ fetch('bofrost.json')
     .then(data => printAllData(data));
 
 function printAllData(data) {
+    table.innerHTML = `
+        <table>
+            <tr>
+                <th>CATEGORIA</th>
+                <th>PAGGINA</th>
+                <th>CODICE</th>
+                <th>NOME</th>
+                <th>PREZZO</th>
+            </tr>
+        </table>
+        `;
     for (let i = 0; i < data.length; i++) {
         table.innerHTML += `
             <tr>

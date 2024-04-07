@@ -13,5 +13,10 @@ table {
 
 table tr {
     width: 100%;
-    background-color: blue;
+}
+
+div#buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
