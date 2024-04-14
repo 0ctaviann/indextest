@@ -12,15 +12,6 @@ img {
     width: 90vw;
     margin: auto;
 }
-
-table {
-    width: 100%;
-}
-
-table tr {
-    width: 100%;
-}
-
 div#buttons {
     width: 100%;
     margin: 10px 0;
@@ -32,6 +23,17 @@ div#buttons {
 div#buttons button {
     width: 20%;
     font-size: 1.2em;
+}
+
+table {
+    width: 100%;
+}
+
+table tr.boxTable {
+    background-color: #eee;
+    border-bottom: 1px solid #444;
+    padding: 5px;
+    margin-bottom: 5px;
 }
 
 div#grid-buttons {

@@ -1,8 +1,8 @@
 table = document.querySelector('table');
 const buttons = document.getElementById('grid-buttons');
-b2 = document.querySelector('#b2');
-b3 = document.querySelector('#b3');
-b4 = document.querySelector('#b4');
+const b2 = document.querySelector('#b2');
+const b3 = document.querySelector('#b3');
+const b4 = document.querySelector('#b4');
 
 data = null
 // read the bofrost.json file and print it
@@ -14,9 +14,8 @@ fetch('bofrost.json')
     })   
     .catch(error => console.error(error));
 
-b2.addEventListener('click', printFasciaB2);
-b3.addEventListener('click', printFasciaB2);
-b4.addEventListener('click', printFasciaB2);
+b1.addEventListener('click', printFasciaBF1);
+b2.addEventListener('click', printFasciaBF1);
 
 buttons.querySelectorAll("button").forEach(button => {
     button.addEventListener("click", () => {
@@ -49,48 +48,56 @@ function printAllData(data) {
 
 function printCustomData(data) {
     console.log(data);
+    tableBox(data);
+}
+
+function tableBox(data) {
+    table.innerHTML = `
+            <tr class="box">
+                <th>CODICE</th>
+                <th>PAGGINA</th>
+                <th>NOME</th>
+            </tr>
+        `;
+    for (let i = 0; i < 30; i++) {
+        table.innerHTML += `<div class="boxTable"></div>`;
+        for (let j = 0; j < data[i].length; j++) {
+            document.querySelector(".boxTable:last-child").innerHTML += `
+            <tr class="boxTr">
+                <td>${data[i][j].CODICE}</td>
+                <td>${data[i][j].PAGGINA}</td>
+                <td>${data[i][j].NOME}</td>
+            </tr>
+            `;
+        }
+    }
 }
 
 // data.filter(item => item.CATEGORIA === 'Gelati' && item.SOTTOCATEGORIA === 'biscotto' && item.PAGGINA === 9);
-function printFasciaB2() {
-    fB2 = [];
-    data.forEach(element => {
-        data.forEach(element2 => {
-            if (element.CATEGORIA != element2.CATEGORIA
-            && !fB2.some(arr => arr[0] === element2 && arr[1] === element)
-            && element.PREZZO + element2.PREZZO > 36) {
-                fB2.push([element, element2]);
-            }
-        });
-    });
-    printCustomData(fB2);
-}
-
-function printFasciaB3() {
-    console.log("Cliccato b3");
-    fb3 = [];
-    count = 1;
+function printFasciaBF1() {
+    document.getElementById("grid-buttons").style.display = "none";
+    listy = [];
     data.forEach(element => {
         data.forEach(element2 => {
             data.forEach(element3 => {
                 if (element.CATEGORIA != element2.CATEGORIA
                 && element.CATEGORIA != element3.CATEGORIA
                 && element2.CATEGORIA != element3.CATEGORIA
-                && !fb3.some(arr => arr[0] === element3 && arr[1] === element2 && arr[2] === element)
-                && !fb3.some(arr => arr[0] === element2 && arr[1] === element3 && arr[2] === element)
-                && element.PREZZO + element2.PREZZO + element3.PREZZO > 36) {
-                    fb3.push([element, element2, element3]);
+                && element.PREZZO + element2.PREZZO >= 25
+                && element.PREZZO + element3.PREZZO >= 25
+                && element2.PREZZO + element3.PREZZO >= 25
+                && element.PREZZO + element2.PREZZO + element3.PREZZO >= 36) {
+                    listy.push([element, element2, element3]);
                 }
-                console.log(count++);
             });
         });
     });
-    printCustomData(fb3);
+    printCustomData(listy);
 }
 
-function printFasciaB4() {
-    console.log("Cliccato b4");
-    fb4 = [];
+function printFasciaBF2() {
+    listy = [];
+    let count = 0
     data.forEach(element => {
         data.forEach(element2 => {
             data.forEach(element3 => {
@@ -101,18 +108,39 @@ function printFasciaB4() {
                     && element2.CATEGORIA != element3.CATEGORIA
                     && element2.CATEGORIA != element4.CATEGORIA
                     && element3.CATEGORIA != element4.CATEGORIA
-                    && !fb4.some(arr => arr[0] === element4 && arr[1] === element3 && arr[2] === element2 && arr[3] === element)
-                    && !fb4.some(arr => arr[0] === element3 && arr[1] === element4 && arr[2] === element2 && arr[3] === element)
-                    && !fb4.some(arr => arr[0] === element2 && arr[1] === element3 && arr[2] === element4 && arr[3] === element)
-                    && !fb4.some(arr => arr[0] === element4 && arr[1] === element2 && arr[2] === element3 && arr[3] === element)
-                    && !fb4.some(arr => arr[0] === element3 && arr[1] === element2 && arr[2] === element4 && arr[3] === element)
-                    && !fb4.some(arr => arr[0] === element2 && arr[1] === element4 && arr[2] === element3 && arr[3] === element)
-                    && element.PREZZO + element2.PREZZO + element3.PREZZO + element4.PREZZO > 36) {
-                        fb4.push([element, element2, element3, element4]);
+                    && element.PREZZO + element2.PREZZO >= 25
+                    && element.PREZZO + element3.PREZZO >= 25
+                    && element.PREZZO + element4.PREZZO >= 25
+                    && element2.PREZZO + element3.PREZZO >= 25
+                    && element2.PREZZO + element4.PREZZO >= 25
+                    && element3.PREZZO + element4.PREZZO >= 25
+                    && element.PREZZO + element2.PREZZO + element3.PREZZO >= 36
+                    && element.PREZZO + element2.PREZZO + element4.PREZZO >= 36
+                    && element.PREZZO + element3.PREZZO + element4.PREZZO >= 36
+                    && element2.PREZZO + element3.PREZZO + element4.PREZZO >= 36) {
+                        if (element.PREZZO + element2.PREZZO + element3.PREZZO >= 36)
+                            listy.push([element, element2, element3]);
+                        if (element.PREZZO + element2.PREZZO + element4.PREZZO >= 36)
+                            listy.push([element, element2, element4]);
+                        if (element.PREZZO + element3.PREZZO + element4.PREZZO >= 36)
+                            listy.push([element, element3, element4]);
+                        if (element2.PREZZO + element3.PREZZO + element4.PREZZO >= 36)
+                            listy.push([element2, element3, element4]);
+                        count++
+                        if (count % 10000 == 0)
+                            console.log(count);
                     }
                 });
             });
         });
+    });
+    printCustomData(listy);
+}
+
+function printFasciaB4() {
+    console.log("Cliccato b4");
+    fb4 = [];
+    data.forEach(element => {
     });
     printCustomData(fb4);
 }
